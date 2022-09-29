@@ -39,7 +39,7 @@
     {#each recomendations as title (title["@id"])}
         <SwiperSlide>
             <div class="image-div">
-                <img src={title.image} alt="123" class="image" />
+                <img src={title.image} alt="Постер {title.title}" class="image" />
                 <div>
                     <h1>{title.title}</h1>
                     <p>{title.description}</p>
