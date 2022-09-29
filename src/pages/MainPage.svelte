@@ -3,7 +3,6 @@
     import { onMount } from "svelte";
     import { Swiper, SwiperSlide } from "swiper/svelte";
     import { Autoplay } from "swiper";
-	import { Container } from "sveltestrap";
 
     let recomendations = [];
 
@@ -50,9 +49,6 @@
         </SwiperSlide>
     {/each}
 </Swiper>
-<Container>
-    test
-</Container>
 <style>
     .image-div {
         width: 100%;
