@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import { Swiper, SwiperSlide } from "swiper/svelte";
     import { Autoplay } from "swiper";
+    import { SkeletonBlock } from '@skeleton-elements/svelte';
 
     let recomendations = [];
 
@@ -27,33 +28,45 @@
     }
 </script>
 
-<Swiper
-    slidesPerView={"auto"}
-    centeredSlides={true}
-    spaceBetween={5}
-    rewind={true}
-    autoplay={true}
-    modules={[Autoplay]}
-    class="mySwiper"
->
-    {#each recomendations as title (title["@id"])}
-        <SwiperSlide>
-            <div class="image-div">
-                <img src={title.image} alt="Постер {title.title}" class="image" />
-                <div>
-                    <h1>{title.title}</h1>
-                    <p>{title.description}</p>
+{#if recomendations.length === 0}
+    <SkeletonBlock effect="blink" height="400px" style="border-radius: 10px;"/>
+{:else}
+    <Swiper
+        slidesPerView={"auto"}
+        centeredSlides={true}
+        spaceBetween={5}
+        loop={true}
+        autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        class="mySwiper"
+    >
+        {#each recomendations as title (title["@id"])}
+            <SwiperSlide>
+                <div class="image-div">
+                    <img
+                        src={title.image}
+                        alt="Постер {title.title}"
+                        class="image"
+                    />
+                    <div>
+                        <h1>{title.title}</h1>
+                        <p>{title.description}</p>
+                    </div>
                 </div>
-            </div>
-            <!-- {title.title} -->
-        </SwiperSlide>
-    {/each}
-</Swiper>
+                <!-- {title.title} -->
+            </SwiperSlide>
+        {/each}
+    </Swiper>
+{/if}
+
 <style>
     .image-div {
         width: 100%;
         position: relative;
-        background-color:#000;
+        background-color: #000;
         border-radius: 10px;
     }
     .image {
@@ -61,7 +74,7 @@
         height: 400px;
         border-radius: 10px;
         opacity: 0.6;
-        background-color:#000;
+        background-color: #000;
     }
     .image-div div {
         text-align: left;
