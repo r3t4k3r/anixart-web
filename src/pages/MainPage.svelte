@@ -22,8 +22,6 @@
             {
                 method: "GET",
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
                     ua: USER_AGENT,
                 },
             }
@@ -38,8 +36,6 @@
             {
                 method: "GET",
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
                     ua: USER_AGENT,
                 },
             }
@@ -54,8 +50,6 @@
             {
                 method: "GET",
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
                     ua: USER_AGENT,
                 },
             }
@@ -63,12 +57,26 @@
         const json = await response.json();
         weekCollections = json.content;
     }
-
 </script>
 
 <!-- Swiper -->
 {#if recomendations.length === 0}
-    <SkeletonBlock effect="blink" height="400px" style="border-radius: 10px;" />
+    <Swiper
+        slidesPerView={"auto"}
+        centeredSlides={true}
+        spaceBetween={5}
+        loop={true}
+        class="mySwiper"
+    >
+        {#each new Array(3) as _}
+            <SwiperSlide style="max-width: 700px;">
+                <SkeletonBlock
+                    height="400px"
+                    style="border-radius: 10px;"
+                />
+            </SwiperSlide>
+        {/each}
+    </Swiper>
 {:else}
     <Swiper
         slidesPerView={"auto"}
@@ -116,9 +124,22 @@
 </div>
 
 <h1>Смотрят сейчас:</h1>
-
 {#if watchingNow.length === 0}
-    <SkeletonBlock effect="blink" height="260px" style="border-radius: 10px;" />
+    <Swiper
+        slidesPerView={"auto"}
+        spaceBetween={5}
+        freeMode={true}
+        class="mySwiper"
+    >
+        {#each new Array(10) as _}
+            <SwiperSlide style="max-width: 200px;">
+                <SkeletonBlock
+                    height="260px"
+                    style="border-radius: 10px;"
+                />
+            </SwiperSlide>
+        {/each}
+    </Swiper>
 {:else}
     <Swiper
         slidesPerView={"auto"}
@@ -146,7 +167,20 @@
 
 <h1>Коллекции недели:</h1>
 {#if weekCollections.length === 0}
-    <SkeletonBlock effect="blink" height="200px" style="border-radius: 10px;" />
+    <Swiper
+        slidesPerView={"auto"}
+        spaceBetween={5}
+        freeMode={true}
+        class="mySwiper"
+    >
+        {#each new Array(3) as _}
+            <SwiperSlide style="max-width: 600px;">
+                <SkeletonBlock
+                    style="border-radius: 10px;height: 200px"
+                />
+            </SwiperSlide>
+        {/each}
+    </Swiper>
 {:else}
     <Swiper
         slidesPerView={"auto"}
@@ -172,7 +206,6 @@
         {/each}
     </Swiper>
 {/if}
-
 
 <style>
     .image-div {
