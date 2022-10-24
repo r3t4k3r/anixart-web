@@ -85,7 +85,7 @@
         centeredSlides={true}
         spaceBetween={5}
         autoplay={{
-            delay: 5000,
+            delay: 3000,
             disableOnInteraction: false,
         }}
         modules={[Autoplay]}
@@ -191,3 +191,9 @@
         </Swiper>
     {/if}
 </Container>
+
+<style>
+    h1 {
+        margin-top: 1em;
+    }
+</style>
