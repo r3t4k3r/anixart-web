@@ -70,7 +70,6 @@
         slidesPerView={"auto"}
         centeredSlides={true}
         spaceBetween={5}
-        loop={true}
         class="mySwiper"
     >
         {#each new Array(3) as _}
