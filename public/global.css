@@ -14,9 +14,12 @@ body {
   padding: 0;
 }
 
+img {
+  pointer-events: none;
+}
+
 .swiper {
   width: 100%;
-  height: 100%;
 }
 
 .swiper-slide {
