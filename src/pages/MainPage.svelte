@@ -84,7 +84,6 @@
         slidesPerView={"auto"}
         centeredSlides={true}
         spaceBetween={5}
-        loop={true}
         autoplay={{
             delay: 5000,
             disableOnInteraction: false,
@@ -95,8 +94,8 @@
         {#each recomendations as title (title["@id"])}
             <SwiperSlide style="max-width: 700px;">
                 <Title
-                    on:clickBlock={on_click_intresting}
-                    name={title.title}
+                    on:clickName={on_click_intresting}
+                    name={title.title == "" ? "Перейти к просмотру" : title.title}
                     description={title.description}
                     image={title.image}
                     id={title.action}
