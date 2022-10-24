@@ -43,9 +43,9 @@
             style="height:{height}"
         />
         <div style="max-width:{width}" class="unselectable">
-            <h1 on:click={click_name} class="unselectable" style="font-size: 24px;cursor: pointer;">{name}</h1>
+            <h1 on:click={click_name} class="unselectable" style="font-size: 24px;cursor: pointer;padding-left: 20px">{name}</h1>
             {#if description.length !== 0}
-                <p on:click={click_description} style="word-break: break-word;" class="unselectable">
+                <p on:click={click_description} style="word-break: break-word;padding-left: 20px" class="unselectable">
                     {description.substring(0, 64)}
                     {#if description.length > 64}...{/if}
                 </p>

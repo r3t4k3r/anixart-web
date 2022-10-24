@@ -73,8 +73,8 @@
         class="mySwiper"
     >
         {#each new Array(3) as _}
-            <SwiperSlide style="max-width: 700px;">
-                <Title height="400px" />
+            <SwiperSlide style="max-width: 800px;">
+                <Title height="450px" />
             </SwiperSlide>
         {/each}
     </Swiper>
@@ -91,7 +91,7 @@
         class="mySwiper"
     >
         {#each recomendations as title (title["@id"])}
-            <SwiperSlide style="max-width: 700px;">
+            <SwiperSlide style="max-width: 800px;">
                 <Title
                     on:clickName={on_click_intresting}
                     name={title.title == "" ? "Перейти к просмотру" : title.title}
@@ -129,8 +129,8 @@
             class="mySwiper"
         >
             {#each new Array(10) as _}
-                <SwiperSlide style="max-width: 200px;">
-                    <Title height="260px" />
+                <SwiperSlide style="max-width: 250px;">
+                    <Title height="300px" />
                 </SwiperSlide>
             {/each}
         </Swiper>
@@ -142,10 +142,9 @@
             class="mySwiper"
         >
             {#each watchingNow as title (title["@id"])}
-                <SwiperSlide style="max-width: 200px;">
+                <SwiperSlide style="max-width: 250px;">
                     <Title
-                        height="260px"
-                        width="200px"
+                        height="300px"
                         image={title.image}
                         name={title.title_ru}
                         id={title.id}
