@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
     import { Swiper, SwiperSlide } from "swiper/svelte";
     import { Autoplay } from "swiper";
-    import { SkeletonBlock } from "@skeleton-elements/svelte";
+    import Title from "../components/Title.svelte";
     import { Col, Row } from "sveltestrap";
     import { Container } from "sveltestrap";
 
@@ -58,6 +58,10 @@
         const json = await response.json();
         weekCollections = json.content;
     }
+
+    function on_click_intresting(event) {
+        console.log(event)
+    }
 </script>
 
 <!-- Swiper -->
@@ -71,7 +75,7 @@
     >
         {#each new Array(3) as _}
             <SwiperSlide style="max-width: 700px;">
-                <SkeletonBlock height="400px" style="border-radius: 10px;" />
+                <Title height="400px" />
             </SwiperSlide>
         {/each}
     </Swiper>
@@ -90,17 +94,13 @@
     >
         {#each recomendations as title (title["@id"])}
             <SwiperSlide style="max-width: 700px;">
-                <div class="image-div">
-                    <img
-                        src={title.image}
-                        alt="Постер {title.title}"
-                        class="image"
-                    />
-                    <div>
-                        <h1>{title.title}</h1>
-                        <p>{title.description}</p>
-                    </div>
-                </div>
+                <Title
+                    on:clickBlock={on_click_intresting}
+                    name={title.title}
+                    description={title.description}
+                    image={title.image}
+                    id={title.action}
+                />
             </SwiperSlide>
         {/each}
     </Swiper>
@@ -132,10 +132,7 @@
         >
             {#each new Array(10) as _}
                 <SwiperSlide style="max-width: 200px;">
-                    <SkeletonBlock
-                        height="260px"
-                        style="border-radius: 10px;"
-                    />
+                    <Title height="260px" />
                 </SwiperSlide>
             {/each}
         </Swiper>
@@ -148,17 +145,13 @@
         >
             {#each watchingNow as title (title["@id"])}
                 <SwiperSlide style="max-width: 200px;">
-                    <div class="image-div">
-                        <img
-                            src={title.image}
-                            alt="Постер {title.title_ru}"
-                            class="image"
-                            style="height: 260px;"
-                        />
-                        <div style="max-width: 160px">
-                            <h1 style="font-size: 18px; word-break: break-word;bottom: 10px">{title.title_ru}</h1>
-                        </div>
-                    </div>
+                    <Title
+                        height="260px"
+                        width="200px"
+                        image={title.image}
+                        name={title.title_ru}
+                        id={title.id}
+                    />
                 </SwiperSlide>
             {/each}
         </Swiper>
@@ -174,7 +167,7 @@
         >
             {#each new Array(3) as _}
                 <SwiperSlide style="max-width: 600px;">
-                    <SkeletonBlock style="border-radius: 10px;height: 200px" />
+                    <Title height="300px" />
                 </SwiperSlide>
             {/each}
         </Swiper>
@@ -187,49 +180,15 @@
         >
             {#each weekCollections as title (title["@id"])}
                 <SwiperSlide style="max-width: 600px;">
-                    <div class="image-div">
-                        <img
-                            src={title.image}
-                            alt="Постер {title.title}"
-                            class="image"
-                            style="height: 300px;"
-                        />
-                        <div style="max-width: 560px">
-                            <h1 style="font-size: 24px;">{title.title}</h1>
-                            {#if title.description.length !== 0}
-                                <p style="word-break: break-word;">
-                                    {title.description.substring(0, 64)}
-                                    {#if title.description.length > 64}...{/if}
-                                </p>
-                            {/if}
-                        </div>
-                    </div>
+                    <Title
+                        height="300px"
+                        image={title.image}
+                        name={title.title}
+                        description={title.description}
+                        id={title.id}
+                    />
                 </SwiperSlide>
             {/each}
         </Swiper>
     {/if}
 </Container>
-
-<style>
-    .image-div {
-        width: 100%;
-        position: relative;
-        background-color: #000;
-        border-radius: 10px;
-    }
-    .image {
-        width: 100%;
-        height: 400px;
-        border-radius: 10px;
-        opacity: 0.6;
-        background-color: #000;
-    }
-    .image-div div {
-        text-align: left;
-        color: white;
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-    }
-</style>
