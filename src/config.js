@@ -1,4 +1,4 @@
-const CORS_BYPASS_SERVER = `https://fuck-anixart.herokuapp.com`
+const CORS_BYPASS_SERVER = `http://46.175.148.75:5000/`
 const USER_AGENT = 'AnixartApp'
 
 export {CORS_BYPASS_SERVER, USER_AGENT};
