@@ -6,6 +6,7 @@
     import Title from "../components/Title.svelte";
     import { Col, Row } from "sveltestrap";
     import { Container } from "sveltestrap";
+    import { FreeMode } from "swiper";
 
     let recomendations = [];
     let watchingNow = [];
@@ -19,7 +20,7 @@
 
     async function getRecomendations() {
         const response = await fetch(
-            `${CORS_BYPASS_SERVER}/https://api.anixart.tv/discover/interesting`,
+            `${CORS_BYPASS_SERVER}https://api.anixart.tv/discover/interesting`,
             {
                 method: "GET",
                 headers: {
@@ -33,7 +34,7 @@
 
     async function getWatchingNow() {
         const response = await fetch(
-            `${CORS_BYPASS_SERVER}/https://api.anixart.tv/discover/watching/0`,
+            `${CORS_BYPASS_SERVER}https://api.anixart.tv/discover/watching/0`,
             {
                 method: "GET",
                 headers: {
@@ -47,7 +48,7 @@
 
     async function getWeekCollections() {
         const response = await fetch(
-            `${CORS_BYPASS_SERVER}/https://api.anixart.tv/collection/all/-1?previous_page=0&where=2&sort=4`,
+            `${CORS_BYPASS_SERVER}https://api.anixart.tv/collection/all/-1?previous_page=0&where=2&sort=4`,
             {
                 method: "GET",
                 headers: {
@@ -65,7 +66,7 @@
 </script>
 
 <!-- Swiper -->
-{#if recomendations.length === 0}
+{#if recomendations.length == 0}
     <Swiper
         slidesPerView={"auto"}
         centeredSlides={true}
@@ -74,7 +75,7 @@
     >
         {#each new Array(3) as _}
             <SwiperSlide style="max-width: 800px;">
-                <Title height="450px" />
+                <Title height="400px"/>
             </SwiperSlide>
         {/each}
     </Swiper>
@@ -127,6 +128,7 @@
             spaceBetween={5}
             freeMode={true}
             class="mySwiper"
+            modules={[FreeMode]}
         >
             {#each new Array(10) as _}
                 <SwiperSlide style="max-width: 250px;">
@@ -140,6 +142,7 @@
             spaceBetween={5}
             freeMode={true}
             class="mySwiper"
+            modules={[FreeMode]}
         >
             {#each watchingNow as title (title["@id"])}
                 <SwiperSlide style="max-width: 250px;">

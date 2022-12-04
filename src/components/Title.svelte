@@ -2,7 +2,7 @@
     import { SkeletonBlock } from "@skeleton-elements/svelte";
     import { createEventDispatcher } from "svelte";
 
-    export let height = "100%";
+    export let height = "400px";
     export let width = "100%";
     export let name = undefined;
     export let description = "";
