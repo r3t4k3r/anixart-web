@@ -2,60 +2,87 @@
     import { SkeletonBlock } from "@skeleton-elements/svelte";
     import { createEventDispatcher } from "svelte";
 
-    export let height = "400px";
-    export let width = "100%";
-    export let name = undefined;
-    export let description = "";
-    export let image = undefined;
-    export let id = undefined;
+    export let type = "normal";
+    export let name = null;
+    export let description = '';
+    export let image = null;
+    export let id = null;
+    export let show_description = true;
 
-    const dispatch = createEventDispatcher();
+    const dp = createEventDispatcher();
 
-    function click_block(event) {
-        dispatch("clickBlock", {
-            event: event,
-            id: id,
-        });
+    const wide = {
+        width: "800px",
+        height: "450px",
+    };
+    const normal = {
+        width: "300px",
+        height: "400px",
+    };
+    const collection = {
+        width: "600px",
+        height: "350px",
+    };
+
+    let sizes = normal;
+
+    if (type === "wide") {
+        sizes = wide;
+    } else if (type == "collection") {
+        sizes = collection;
+    } else {
+        sizes = normal;
     }
-    function click_name(event) {
-        console.log("print name")
-        dispatch("clickName", {
-            event: event,
-            id: id,
-        });
-    }
-    function click_description(event) {
-        dispatch("clickDescription", {
-            event: event,
-            id: id,
-        });
-    }
+
+    const animeObj = {
+        id: id,
+        name: name,
+        description: description,
+        image: image,
+    };
+
+    const clickBlock = (_) => dp("clickBlock", animeObj);
+    const clickName = (_) => dp("clickName", animeObj);
+    const clickDescription = (_) => dp("clickDescription", animeObj);
 </script>
 
-<div class="image-div unselectable" on:click={click_block}>
-    {#if image == undefined}
-        <SkeletonBlock style="border-radius: 10px;height: {height}" />
+<div
+    class="image_block unselectable"
+    style="cursor:pointer"
+    on:click={clickBlock}
+>
+    {#if image == null}
+        <SkeletonBlock
+            style="border-radius:10px;height:{sizes.height};max-width:{sizes.width}"
+        />
     {:else}
         <img
             src={image}
             alt="Постер {name}"
             class="image unselectable"
-            style="height:{height}"
+            style="height:{sizes.height}"
         />
-        <div style="max-width:{width}" class="unselectable">
-            <h1 on:click={click_name} class="unselectable" style="font-size: 24px;cursor: pointer;padding-left: 20px">{name}</h1>
-            {#if description.length !== 0}
-                <p on:click={click_description} style="word-break: break-word;padding-left: 20px" class="unselectable">
-                    {description.substring(0, 64)}
-                    {#if description.length > 64}...{/if}
-                </p>
-            {/if}
+        <div style="max-width:{sizes.width};" class="unselectable block_down">
+            <div class="anime_info">
+                <span
+                    on:click={clickName}
+                    class="unselectable anime_name"
+                >
+                    {name}
+                </span>
+                {#if description.length > 0 && show_description === true}
+                    <p on:click={clickDescription} class="unselectable anime_desctiption">
+                        {description.substring(0, 90)}
+                        {#if description.length > 90}...{/if}
+                    </p>
+                {/if}
+            </div>
         </div>
     {/if}
 </div>
 
 <style>
-    .image-div {
+    .image_block {
         width: 100%;
         position: relative;
         background-color: #000;
@@ -65,24 +92,40 @@
         width: 100%;
         height: 400px;
         border-radius: 10px;
-        opacity: 0.6;
+        opacity: 0.7;
         background-color: #000;
     }
-    .image-div div {
-        text-align: left;
-        color: white;
+    .block_down {
+        display: flex;
+        align-items: flex-end;
         position: absolute;
         bottom: 0px;
         left: 0px;
         width: 100%;
+        height: 50%;
+        max-height: 200px;
+        background: linear-gradient(transparent 0.1em, black 80%, black 100%);
+        border-radius: 10px;
+    }
+    .anime_info {
+        padding: 12px;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .anime_name {
+        text-align: left;
+        font-size: 23px;
+        color: rgb(230, 230, 230);
+    }
+    .anime_desctiption {
+        text-align: left;
+        font-size: 18px;
+        color: rgb(185, 185, 185);
+        margin-bottom: 0.1em;
     }
     .unselectable {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-        -khtml-user-select: none; /* Konqueror */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  not supported by any browser */
+        user-select: none;
     }
 </style>

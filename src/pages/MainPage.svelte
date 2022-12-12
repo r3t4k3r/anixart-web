@@ -1,196 +1,72 @@
 <script lang="ts">
-    import { CORS_BYPASS_SERVER, USER_AGENT } from "../config";
     import { onMount } from "svelte";
-    import { Swiper, SwiperSlide } from "swiper/svelte";
-    import { Autoplay } from "swiper";
-    import Title from "../components/Title.svelte";
-    import { Col, Row } from "sveltestrap";
-    import { Container } from "sveltestrap";
-    import { FreeMode } from "swiper";
+    import { api } from "../api/api";
 
-    let recomendations = [];
-    let watchingNow = [];
-    let weekCollections = [];
+    import { RCODE } from "../config";
+    import { Container, Button, Col, Row } from "sveltestrap";
+    import Interesting from "../components/MainPage/Interesting.svelte";
+    import WatchNow from "../components/MainPage/WatchNow.svelte";
+    import Collection from "../components/MainPage/Collection.svelte"
+
+    let interesting = { code: RCODE.LOADING, content: null };
+    let watchingNow = { code: RCODE.LOADING, content: null };
+    let weekCollections = { code: RCODE.LOADING, content: null };
 
     onMount(() => {
-        getRecomendations();
-        getWatchingNow();
-        getWeekCollections();
+        api.discover.interesting().then((r) => (interesting = r));
+        api.discover.watching().then((r) => (watchingNow = r));
+        api.collection.all().then((r) => (weekCollections = r));
     });
 
-    async function getRecomendations() {
-        const response = await fetch(
-            `${CORS_BYPASS_SERVER}https://api.anixart.tv/discover/interesting`,
-            {
-                method: "GET",
-                headers: {
-                    ua: USER_AGENT,
-                },
-            }
-        );
-        const json = await response.json();
-        recomendations = json.content;
-    }
-
-    async function getWatchingNow() {
-        const response = await fetch(
-            `${CORS_BYPASS_SERVER}https://api.anixart.tv/discover/watching/0`,
-            {
-                method: "GET",
-                headers: {
-                    ua: USER_AGENT,
-                },
-            }
-        );
-        const json = await response.json();
-        watchingNow = json.content;
-    }
-
-    async function getWeekCollections() {
-        const response = await fetch(
-            `${CORS_BYPASS_SERVER}https://api.anixart.tv/collection/all/-1?previous_page=0&where=2&sort=4`,
-            {
-                method: "GET",
-                headers: {
-                    ua: USER_AGENT,
-                },
-            }
-        );
-        const json = await response.json();
-        weekCollections = json.content;
-    }
-
-    function on_click_intresting(event) {
-        console.log(event)
-    }
+    const clickInterestingTitleCallback = (event) =>
+        console.log("event:", event);
 </script>
 
-<!-- Swiper -->
-{#if recomendations.length == 0}
-    <Swiper
-        slidesPerView={"auto"}
-        centeredSlides={true}
-        spaceBetween={5}
-        class="mySwiper"
-    >
-        {#each new Array(3) as _}
-            <SwiperSlide style="max-width: 800px;">
-                <Title height="400px"/>
-            </SwiperSlide>
-        {/each}
-    </Swiper>
-{:else}
-    <Swiper
-        slidesPerView={"auto"}
-        centeredSlides={true}
-        spaceBetween={5}
-        autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        class="mySwiper"
-    >
-        {#each recomendations as title (title["@id"])}
-            <SwiperSlide style="max-width: 800px;">
-                <Title
-                    on:clickName={on_click_intresting}
-                    name={title.title == "" ? "Перейти к просмотру" : title.title}
-                    description={title.description}
-                    image={title.image}
-                    id={title.action}
-                />
-            </SwiperSlide>
-        {/each}
-    </Swiper>
-{/if}
+<Interesting
+    code={interesting.code}
+    content={interesting.content}
+    on:clickBlock={clickInterestingTitleCallback}
+/>
 
 <Container>
-    <div style="font-size: 25px;">
-        <Row>
-            <Col>Популярное</Col>
-            <Col>Расписание</Col>
-        </Row>
-        <Row>
-            <Col>Коллекции</Col>
-            <Col>Фильтр</Col>
-        </Row>
-        <Row>
-            <Col>Онгоинги</Col>
-            <Col>Рандом</Col>
-        </Row>
-    </div>
+    <Row>
+        <Col>
+            <Button class="mt-3" block outline color="dark"
+                >Популярное 💎</Button
+            >
+        </Col>
+        <Col>
+            <Button class="mt-3" block outline color="dark"
+                >Расписание 📃</Button
+            >
+        </Col>
+    </Row>
+    <Row>
+        <Col>
+            <Button class="mt-3" block outline color="dark">Коллекции 💻</Button
+            >
+        </Col>
+        <Col>
+            <Button class="mt-3" block outline color="dark">Фильтр 🇷🇺</Button>
+        </Col>
+    </Row>
+    <Row>
+        <Col>
+            <Button class="mt-3" block outline color="dark">Онгоинги 📲</Button>
+        </Col>
+        <Col>
+            <Button class="mt-3" block outline color="dark">Рандом 🃏</Button>
+        </Col>
+    </Row>
 
     <h1>Смотрят сейчас:</h1>
-    {#if watchingNow.length === 0}
-        <Swiper
-            slidesPerView={"auto"}
-            spaceBetween={5}
-            freeMode={true}
-            class="mySwiper"
-            modules={[FreeMode]}
-        >
-            {#each new Array(10) as _}
-                <SwiperSlide style="max-width: 250px;">
-                    <Title height="300px" />
-                </SwiperSlide>
-            {/each}
-        </Swiper>
-    {:else}
-        <Swiper
-            slidesPerView={"auto"}
-            spaceBetween={5}
-            freeMode={true}
-            class="mySwiper"
-            modules={[FreeMode]}
-        >
-            {#each watchingNow as title (title["@id"])}
-                <SwiperSlide style="max-width: 250px;">
-                    <Title
-                        height="300px"
-                        image={title.image}
-                        name={title.title_ru}
-                        id={title.id}
-                    />
-                </SwiperSlide>
-            {/each}
-        </Swiper>
-    {/if}
+    <WatchNow code={watchingNow.code} content={watchingNow.content} />
 
     <h1>Коллекции недели:</h1>
-    {#if weekCollections.length === 0}
-        <Swiper
-            slidesPerView={"auto"}
-            spaceBetween={5}
-            freeMode={true}
-            class="mySwiper"
-        >
-            {#each new Array(3) as _}
-                <SwiperSlide style="max-width: 600px;">
-                    <Title height="300px" />
-                </SwiperSlide>
-            {/each}
-        </Swiper>
-    {:else}
-        <Swiper
-            slidesPerView={"auto"}
-            spaceBetween={5}
-            freeMode={true}
-            class="mySwiper"
-        >
-            {#each weekCollections as title (title["@id"])}
-                <SwiperSlide style="max-width: 600px;">
-                    <Title
-                        height="300px"
-                        image={title.image}
-                        name={title.title}
-                        description={title.description}
-                        id={title.id}
-                    />
-                </SwiperSlide>
-            {/each}
-        </Swiper>
-    {/if}
+    <Collection
+        code={weekCollections.code}
+        content={weekCollections.content}
+    />
 </Container>
 
 <style>
