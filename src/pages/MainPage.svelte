@@ -59,10 +59,10 @@
         </Col>
     </Row>
 
-    <h1>Смотрят сейчас:</h1>
+    <h1>Смотрят сейчас</h1>
     <WatchNow code={watchingNow.code} content={watchingNow.content} />
 
-    <h1>Коллекции недели:</h1>
+    <h1>Коллекции недели</h1>
     <Collection
         code={weekCollections.code}
         content={weekCollections.content}
