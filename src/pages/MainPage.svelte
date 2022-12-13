@@ -6,7 +6,7 @@
     import { Container, Button, Col, Row } from "sveltestrap";
     import Interesting from "../components/MainPage/Interesting.svelte";
     import WatchNow from "../components/MainPage/WatchNow.svelte";
-    import Collection from "../components/MainPage/Collection.svelte"
+    import Collection from "../components/MainPage/Collection.svelte";
 
     let interesting = { code: RCODE.LOADING, content: null };
     let watchingNow = { code: RCODE.LOADING, content: null };
@@ -30,32 +30,23 @@
 
 <Container>
     <Row>
-        <Col>
-            <Button class="mt-3" block outline color="dark"
-                >Популярное 💎</Button
-            >
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Популярное</Button>
         </Col>
-        <Col>
-            <Button class="mt-3" block outline color="dark"
-                >Расписание 📃</Button
-            >
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Коллекции</Button>
         </Col>
-    </Row>
-    <Row>
-        <Col>
-            <Button class="mt-3" block outline color="dark">Коллекции 💻</Button
-            >
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Расписание</Button>
         </Col>
-        <Col>
-            <Button class="mt-3" block outline color="dark">Фильтр 🇷🇺</Button>
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Онгоинги</Button>
         </Col>
-    </Row>
-    <Row>
-        <Col>
-            <Button class="mt-3" block outline color="dark">Онгоинги 📲</Button>
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Фильтр</Button>
         </Col>
-        <Col>
-            <Button class="mt-3" block outline color="dark">Рандом 🃏</Button>
+        <Col class="col-xxl-4 col-xl-4 col-lg-4 col-sm-6 col-6">
+            <Button class="mt-3" block outline color="dark">Рандом</Button>
         </Col>
     </Row>
 
@@ -63,10 +54,7 @@
     <WatchNow code={watchingNow.code} content={watchingNow.content} />
 
     <h1>Коллекции недели</h1>
-    <Collection
-        code={weekCollections.code}
-        content={weekCollections.content}
-    />
+    <Collection code={weekCollections.code} content={weekCollections.content} />
 </Container>
 
 <style>
