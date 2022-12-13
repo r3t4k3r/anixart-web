@@ -17,7 +17,7 @@
     >
         {#each new Array(10) as _}
             <SwiperSlide style="max-width:300px;">
-                <Title />
+                <Title type="normal" />
             </SwiperSlide>
         {/each}
     </Swiper>

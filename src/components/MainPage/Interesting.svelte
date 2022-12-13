@@ -31,7 +31,7 @@
             disableOnInteraction: false,
         }}
         modules={[Autoplay]}
-        pagination={true} 
+        pagination={true}
         class="mySwiper"
     >
         {#each content as title (title["@id"])}
