@@ -1,6 +1,7 @@
-import { interesting } from "./discover/interesting";
-import { watching } from "./discover/watching";
-import { all } from './collection/all'
+import { interesting } from "./endpoints/discover/interesting";
+import { watching } from "./endpoints/discover/watching";
+import { all } from './endpoints/collection/all'
+import { release } from "./endpoints/release";
 const api = {
     discover: {
         'interesting': interesting,
@@ -8,6 +9,9 @@ const api = {
     },
     collection: {
         'all': all
+    },
+    release: {
+        'release': release
     }
 }
 export { api }

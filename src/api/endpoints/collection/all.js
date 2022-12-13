@@ -1,4 +1,4 @@
-import { FULL_URL } from "../../config";
+import { FULL_URL } from "../../../config";
 
 async function all(param = -1, previous_page = 0, where = 2, sort = 4) {
     const response = await fetch(
