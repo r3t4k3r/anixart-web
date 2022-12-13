@@ -48,7 +48,7 @@
 
 <div
     class="image_block unselectable"
-    style="cursor:pointer"
+    style="cursor:pointer;max-width:{sizes.width}"
     on:click={clickBlock}
 >
     {#if image == null}
@@ -124,8 +124,5 @@
         font-size: 18px;
         color: rgb(185, 185, 185);
         margin-bottom: 0.1em;
-    }
-    .unselectable {
-        user-select: none;
     }
 </style>
