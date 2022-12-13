@@ -29,7 +29,7 @@
         class="mySwiper"
         grabCursor={true}
     >
-        {#each content as title (title["@id"])}
+        {#each content as title (title["id"])}
             <SwiperSlide style="max-width:600px;">
                 <Title
                     on:clickBlock
