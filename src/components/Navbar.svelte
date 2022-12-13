@@ -20,8 +20,8 @@
     }
 </script>
 
-<Navbar color="light" light expand="md" class="sticky-top">
-    <NavbarBrand href="/">sveltestrap</NavbarBrand>
+<Navbar color="dark" dark class="sticky-top" expand="md">
+    <NavbarBrand href="/">AniHex</NavbarBrand>
     <NavbarToggler on:click={() => (isOpen = !isOpen)} />
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav class="ms-auto" navbar>
